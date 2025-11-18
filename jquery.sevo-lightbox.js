@@ -10,7 +10,8 @@
             overlayClass: "sevo-lightbox__overlay", 
             closeOnClick: false,
             showCaption: true,
-            fadeSpeed: 250
+            fadeSpeed: 250,
+            closeOnEscape: true
         }, options);
 
         return this.each(function() {
@@ -20,6 +21,14 @@
                 let closeBtn;
                 let caption;
                 let that = this;
+
+
+
+                function removeOverlay() {
+                    overlay.fadeOut(settings.fadeSpeed, function() {
+                        overlay.remove();
+                    });
+                }
 
 
                 $(this).on("click", function(e) {
@@ -56,9 +65,7 @@
                         .addClass("sevo-lightbox__overlay-inner")
                         .on("click", function(e){
                             if(settings.closeOnClick) {
-                                overlay.fadeOut(settings.fadeSpeed, function() {
-                                overlay.remove();
-                            });
+                                removeOverlay();
                             }
                         });
                     
@@ -83,9 +90,7 @@
                         })
                         .addClass("sevo-lightbox__close-btn")
                         .on("click", function(e) {
-                            overlay.fadeOut(settings.fadeSpeed, function() {
-                                overlay.remove();
-                            });
+                            removeOverlay();
                         });
 
 
@@ -101,6 +106,15 @@
                         .addClass("sevo-lightbox__caption")
                         .text(captionText);
 
+
+                    $(document).on("keydown", function(e) {
+                        if(settings.closeOnEscape) {
+                            if(e.key === "Escape") {
+                                removeOverlay();
+                            }
+
+                        }
+                    });
 
                     overlayInner.append(closeBtn);
                     overlayInner.append(img);

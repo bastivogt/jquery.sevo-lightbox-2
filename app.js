@@ -4,7 +4,8 @@
         closeContent: "Close", 
         showCaption: true,
         overlayBackgroundColor: "rgba(0, 0, 0, 0.8)",
-        closeOnClick: true
+        closeOnClick: true,
+        // closeOnEscape: false
     });
 
 
